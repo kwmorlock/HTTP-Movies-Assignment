@@ -40,8 +40,8 @@ const Update = props => {
       .put(`http://localhost:5000/api/movies/${id}`, movie)
       .then(res => {
         // res.data
-        props.setMovies(res.data);
-        push(`/movie-list/${id}`);
+        props.getMovieList()
+        push(`/`);
 
         // res.data ==> just updated item object
       })
@@ -80,7 +80,7 @@ const Update = props => {
         <div className="baseline" />
 
         <input
-          type="string"
+          type="text"
           name="stars"
           onChange={changeHandler}
           placeholder="stars"
@@ -88,16 +88,9 @@ const Update = props => {
         />
         <div className="baseline" />
 
-        <input
-          type="string"
-          name="shipping"
-          onChange={changeHandler}
-          placeholder="Shipping"
-          value={movie.shipping}
-        />
-        <div className="baseline" />
+    
 
-        <button className="md-button form-button">Movie Button</button>
+        <button className="md-button form-button">Edit Button</button>
       </form>
     </div>
   );
