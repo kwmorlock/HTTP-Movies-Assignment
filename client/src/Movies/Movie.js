@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import MovieCard from "./MovieCard";
 
 
-function Movie({ addToSavedList }) {
+function Movie({ addToSavedList, getMovieList }) {
   const [movie, setMovie] = useState(null);
   const params = useParams();
 const history = useHistory();
@@ -18,6 +18,17 @@ const history = useHistory();
   const saveMovie = () => {
     addToSavedList(movie);
   };
+
+  const deleteMovie = () => {
+      axios
+        .delete(`http://localhost:5000/api/movies/${params.id}`)
+        .then(res => {
+          getMovieList();
+          history.push('/');
+        })
+        .catch(err => console.log(err));
+    }
+
 
   useEffect(() => {
     fetchMovie(params.id);
@@ -40,7 +51,12 @@ const history = useHistory();
         Save
     
       </div>
+      <div className="delete-button" onClick={deleteMovie}>
+        Delete
+    
+      </div>
       <button onClick={handleEdit}>Edit Button</button>
+      
     </div>
   );
 }

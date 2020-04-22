@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const initialMovie = {
@@ -9,19 +9,11 @@ const initialMovie = {
   stars: [],
 };
 
-const Update = props => {
+const AddMovie = props => {
   const { push } = useHistory();
   const [movie, setMovie] = useState(initialMovie);
-  const { id } = useParams();
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/movies/${id}`)
-      .then(res => {
-        // res.data
-        setMovie(res.data);
-      })
-      .catch(err => console.log(err));
-  }, [id]);
+  
+
 
 
   const changeHandler = e => {
@@ -36,22 +28,20 @@ const Update = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // make a PUT request to edit the item
     axios
-      .put(`http://localhost:5000/api/movies/${id}`, movie)
+      .post(`http://localhost:5000/api/movies`, movie)
       .then(res => {
-        // res.data
+    
         props.getMovieList()
         push(`/`);
 
-        // res.data ==> just updated item object
       })
       .catch(err => console.log(err));
   };
 
   return (
     <div>
-      <h2>Update Movie</h2>
+      <h2>Add Movie</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -91,10 +81,10 @@ const Update = props => {
 
     
 
-        <button className="md-button form-button">Edit Button</button>
+        <button className="md-button form-button">Add Button</button>
       </form>
     </div>
   );
 };
 //join is to combine array items
-export default Update;
+export default AddMovie;
